@@ -1,26 +1,65 @@
+<!-- App.vue -->
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <div>
+      <label for="titleInput">Modal Title:</label>
+      <input type="text" v-model="modalTitleInput" id="titleInput" />
+    </div>
+    <div>
+      <label for="contentInput">Modal Content:</label>
+      <input type="text" v-model="modalContentInput" id="contentInput" />
+    </div>
+    <button @click="openModal">Open Modal</button>
+    <transition name="slide-fade">
+      <modal-component v-if="showModal" @close="closeModal" :modal-title="modalTitle" :modal-content="modalContent" />
+    </transition>
+  </div>
 </template>
 
+
+
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ModalComponent from './components/ModalComponent.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    ModalComponent,
+  },
+  data() {
+    return {
+      showModal: false,
+      modalTitleInput: '',
+      modalContentInput: '',
+    };
+  },
+  methods: {
+    openModal() {
+      this.modalTitle = this.modalTitleInput || 'Default Title';
+      this.modalContent = this.modalContentInput || 'Default Content';
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+    },
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+/* Styling for the modal transition effect */
+.slide-fade-enter-active {
+  transition: all 2s ease-out; /* Adjust the duration as needed */
+}
+
+.slide-fade-leave-active {
+  transition: all 2s cubic-bezier(1, 0.5, 0.8, 1); /* Adjust the duration and easing function */
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }
 </style>
+
