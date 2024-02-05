@@ -1,4 +1,3 @@
-<!-- App.vue -->
 <template>
   <div id="app">
     <div>
@@ -13,10 +12,9 @@
     <transition name="slide-fade">
       <modal-component v-if="showModal" @close="closeModal" :modal-title="modalTitle" :modal-content="modalContent" />
     </transition>
+    <div class="overlay" v-if="showModal"></div>
   </div>
 </template>
-
-
 
 <script>
 import ModalComponent from './components/ModalComponent.vue';
@@ -46,8 +44,18 @@ export default {
 </script>
 
 <style>
+/* Add this style for the overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Adjust the transparency as needed */
+  z-index: 1; /* Make sure the overlay is above other elements */
+  pointer-events: auto; /* Enable pointer events on the overlay */
+}
 
-/* Styling for the modal transition effect */
 .slide-fade-enter-active {
   transition: all 2s ease-out; /* Adjust the duration as needed */
 }
@@ -61,5 +69,5 @@ export default {
   transform: translateX(20px);
   opacity: 0;
 }
-</style>
 
+</style>
