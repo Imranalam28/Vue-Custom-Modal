@@ -1,15 +1,13 @@
-<!-- ModalComponent.vue -->
-<!-- Displaying Dynamic Data: ModalComponent.vue -->
 <template>
   <div class="modal">
     <div class="modal-content">
       <h2>{{ formattedTitle }}</h2>
       <p>{{ formattedContent }}</p>
+      <button @click="closeModal">Close</button>
     </div>
   </div>
 </template>
 
-<!-- Scripting for Dynamic Content: ModalComponent.vue -->
 <script>
 export default {
   props: ['modalTitle', 'modalContent'],
@@ -21,10 +19,13 @@ export default {
       return `Content: ${this.modalContent}`;
     },
   },
+  methods: {
+    closeModal() {
+      this.$emit('close');
+    },
+  },
 };
 </script>
-
-
 
 <style scoped>
 .modal {
@@ -40,7 +41,7 @@ export default {
   border-radius: 8px;
   box-sizing: border-box;
   text-align: center;
-  
+  z-index: 2;
 }
 
 .modal-content {
@@ -48,5 +49,5 @@ export default {
   color: #333;
   margin-top: 10px;
 }
-</style>
 
+</style>
